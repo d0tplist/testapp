@@ -4,9 +4,6 @@
 import PackageDescription
 import Foundation
 
-func testing() -> String {
-    return "jaquing"
-}
 
 func shell(_ command: String) -> String {
     let task = Process()
@@ -24,13 +21,45 @@ func shell(_ command: String) -> String {
     return output
 }
 
+func getCurrentBranch() -> String{
+    return shell("git rev-parse --abbrev-ref HEAD")
+}
+
+func resolveRemote(url : String, _ spected : String, _ ifnot : String) -> String{
+    
+    let result = shell("git ls-remote -h \(url)")
+    
+    let branches = result.split(separator: "\n")
+    
+    for branch in branches {
+        let split = branch.split(separator: "/")
+        
+        if String(split[split.count - 1]) == spected {
+            return spected
+        }
+    }
+    
+    for branch in branches {
+        let split = branch.split(separator: "/")
+        
+        if String(split[split.count - 1]) == ifnot {
+            return ifnot
+        }
+    }
+    
+    
+    return "main"
+}
+
+let currentBranch = getCurrentBranch()
+
 let package = Package(
     name: "testapp",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/d0tplist/libraryb.git", .branch("jaquing")),
-        .package(url: "https://github.com/d0tplist/librarya.git", .branch(testing()))
+        .package(url: "https://github.com/d0tplist/libraryb.git", .branch(resolveRemote(url: "https://github.com/d0tplist/libraryb.git", currentBranch, "main"))),
+        .package(url: "https://github.com/d0tplist/librarya.git", .branch(resolveRemote(url: "https://github.com/d0tplist/librarya.git", currentBranch, "main")))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -43,3 +72,4 @@ let package = Package(
             dependencies: ["testapp"]),
     ]
 )
+
