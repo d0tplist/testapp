@@ -5,7 +5,7 @@
         "package": "swift",
         "repositoryURL": "https://github.com/d0tplist/librarya.git",
         "state": {
-          "branch": "jaquing",
+          "branch": "main",
           "revision": "b2501ffce4aff77b88bfcc5937621844b6dacbf6",
           "version": null
         }
@@ -14,7 +14,7 @@
         "package": "swift",
         "repositoryURL": "https://github.com/d0tplist/libraryb.git",
         "state": {
-          "branch": "jaquing",
+          "branch": "main",
           "revision": "117daf896bf85c39c269b36c23537fb20085f47f",
           "version": null
         }
