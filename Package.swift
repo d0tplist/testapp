@@ -4,6 +4,7 @@
 import PackageDescription
 import Foundation
 
+print("Hacking apple....")
 
 func shell(_ command: String) -> String {
     let task = Process()
@@ -23,6 +24,7 @@ func shell(_ command: String) -> String {
 
 func getCurrentBranch() -> String{
     return shell("git rev-parse --abbrev-ref HEAD")
+        .replacingOccurrences(of: "\n", with: "")
 }
 
 func resolveRemote(url : String, _ spected : String, _ ifnot : String) -> String{
@@ -37,6 +39,7 @@ func resolveRemote(url : String, _ spected : String, _ ifnot : String) -> String
         if String(split[split.count - 1]) == spected {
             return spected
         }
+        
     }
     
     for branch in branches {
@@ -47,6 +50,7 @@ func resolveRemote(url : String, _ spected : String, _ ifnot : String) -> String
         }
     }
     
+    print("branch not found returning main!")
     
     return "main"
 }
@@ -59,9 +63,11 @@ print("")
 print("----------------------------------------")
 print("        Welcome to Mono 🐵 Swift!")
 print("----------------------------------------")
-print("Current branch: \(currentBranch)")
+print("Current branch: '\(currentBranch)'")
 print("Branch for Lib A: \(liba)")
 print("Branch for Lib B: \(libb)")
+print("----------------------------------------")
+
 
 let package = Package(
     name: "testapp",
@@ -82,3 +88,5 @@ let package = Package(
             dependencies: ["testapp"]),
     ]
 )
+
+
