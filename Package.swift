@@ -52,14 +52,24 @@ func resolveRemote(url : String, _ spected : String, _ ifnot : String) -> String
 }
 
 let currentBranch = getCurrentBranch()
+let liba = resolveRemote(url: "https://github.com/d0tplist/libraryb.git", currentBranch, "main")
+let libb = resolveRemote(url: "https://github.com/d0tplist/librarya.git", currentBranch, "main")
+
+print("")
+print("----------------------------------------")
+print("        Welcome to Mono 🐵 Swift!")
+print("----------------------------------------")
+print("Current branch: \(currentBranch)")
+print("Branch for Lib A: \(liba)")
+print("Branch for Lib B: \(libb)")
 
 let package = Package(
     name: "testapp",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/d0tplist/libraryb.git", .branch(resolveRemote(url: "https://github.com/d0tplist/libraryb.git", currentBranch, "main"))),
-        .package(url: "https://github.com/d0tplist/librarya.git", .branch(resolveRemote(url: "https://github.com/d0tplist/librarya.git", currentBranch, "main")))
+        .package(url: "https://github.com/d0tplist/libraryb.git", .branch(liba)),
+        .package(url: "https://github.com/d0tplist/librarya.git", .branch(libb))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
